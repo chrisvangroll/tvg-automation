@@ -139,9 +139,14 @@ export default function Home() {
               </div>
 
               {/* Request Service Button */}
-              <button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-lg py-4 px-8 rounded-lg transition-colors shadow-md hover:shadow-lg">
+              <a
+                href="http://tvgautomation.com/contact"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-lg py-4 px-8 rounded-lg transition-colors shadow-md hover:shadow-lg text-center block cursor-pointer"
+              >
                 Request a Service
-              </button>
+              </a>
             </div>
           </div>
 
