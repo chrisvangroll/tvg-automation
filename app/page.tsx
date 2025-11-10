@@ -132,9 +132,9 @@ export default function Home() {
 
           {/* Conditional Content Based on Tool Type */}
           {toolType === "show_phone_number" ? (
-            <ShowPhoneWidget urgency={urgency} />
+            <ShowPhoneWidget />
           ) : toolType === "get_quote" ? (
-            <GetQuoteWidget serviceType={serviceType} customerName={customerName} />
+            <GetQuoteWidget  />
           ) : (
             <DefaultWidget />
           )}
