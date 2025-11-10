@@ -31,25 +31,40 @@ function widgetMeta(widget: ContentWidget) {
 const handler = createMcpHandler(async (server) => {
   const html = await getAppsSdkCompatibleHtml(baseURL, "/");
 
-  const contentWidget: ContentWidget = {
-    id: "show_content",
-    title: "Show Content",
-    templateUri: "ui://widget/content-template.html",
-    invoking: "Loading content...",
-    invoked: "Content loaded",
+  // Widget for get_quote tool
+  const quoteWidget: ContentWidget = {
+    id: "get_quote",
+    title: "Get Quote",
+    templateUri: "ui://widget/quote-template.html",
+    invoking: "Preparing quote...",
+    invoked: "Quote ready",
     html: html,
-    description: "Displays the homepage content",
-    widgetDomain: "https://nextjs.org/docs",
+    description: "Get a service quote from TVG Automation",
+    widgetDomain: "https://tvgautomation.com",
   };
+
+  // Widget for show_phone_number tool
+  const phoneWidget: ContentWidget = {
+    id: "show_phone_number",
+    title: "Show Phone Number",
+    templateUri: "ui://widget/phone-template.html",
+    invoking: "Loading contact info...",
+    invoked: "Contact info loaded",
+    html: html,
+    description: "Display TVG Automation phone number and contact options",
+    widgetDomain: "https://tvgautomation.com",
+  };
+
+  // Register resources for both widgets
   server.registerResource(
-    "content-widget",
-    contentWidget.templateUri,
+    "quote-widget",
+    quoteWidget.templateUri,
     {
-      title: contentWidget.title,
-      description: contentWidget.description,
+      title: quoteWidget.title,
+      description: quoteWidget.description,
       mimeType: "text/html+skybridge",
       _meta: {
-        "openai/widgetDescription": contentWidget.description,
+        "openai/widgetDescription": quoteWidget.description,
         "openai/widgetPrefersBorder": true,
       },
     },
@@ -58,41 +73,98 @@ const handler = createMcpHandler(async (server) => {
         {
           uri: uri.href,
           mimeType: "text/html+skybridge",
-          text: `<html>${contentWidget.html}</html>`,
+          text: `<html>${quoteWidget.html}</html>`,
           _meta: {
-            "openai/widgetDescription": contentWidget.description,
+            "openai/widgetDescription": quoteWidget.description,
             "openai/widgetPrefersBorder": true,
-            "openai/widgetDomain": contentWidget.widgetDomain,
+            "openai/widgetDomain": quoteWidget.widgetDomain,
           },
         },
       ],
     })
   );
 
-  server.registerTool(
-    contentWidget.id,
+  server.registerResource(
+    "phone-widget",
+    phoneWidget.templateUri,
     {
-      title: contentWidget.title,
-      description:
-        "Fetch and display the homepage content with the name of the user",
-      inputSchema: {
-        name: z.string().describe("The name of the user to display on the homepage"),
+      title: phoneWidget.title,
+      description: phoneWidget.description,
+      mimeType: "text/html+skybridge",
+      _meta: {
+        "openai/widgetDescription": phoneWidget.description,
+        "openai/widgetPrefersBorder": true,
       },
-      _meta: widgetMeta(contentWidget),
     },
-    async ({ name }) => {
+    async (uri) => ({
+      contents: [
+        {
+          uri: uri.href,
+          mimeType: "text/html+skybridge",
+          text: `<html>${phoneWidget.html}</html>`,
+          _meta: {
+            "openai/widgetDescription": phoneWidget.description,
+            "openai/widgetPrefersBorder": true,
+            "openai/widgetDomain": phoneWidget.widgetDomain,
+          },
+        },
+      ],
+    })
+  );
+
+  // Register get_quote tool
+  server.registerTool(
+    quoteWidget.id,
+    {
+      title: quoteWidget.title,
+      description:
+        "Get a service quote from TVG Automation. Use this when users ask about pricing, costs, or want to request a quote.",
+      inputSchema: {
+        customerName: z.string().optional().describe("Name of the customer requesting the quote"),
+      },
+      _meta: widgetMeta(quoteWidget),
+    },
+    async ({ customerName }) => {
       return {
         content: [
           {
             type: "text",
-            text: name,
+            text: `Quote request${customerName ? ` for ${customerName}` : ''}`,
           },
         ],
         structuredContent: {
-          name: name,
+          toolType: "get_quote",
+          customerName: customerName,
           timestamp: new Date().toISOString(),
         },
-        _meta: widgetMeta(contentWidget),
+        _meta: widgetMeta(quoteWidget),
+      };
+    }
+  );
+
+  // Register show_phone_number tool
+  server.registerTool(
+    phoneWidget.id,
+    {
+      title: phoneWidget.title,
+      description:
+        "Display TVG Automation's phone number and contact information. Use this when users want to call or need contact details.",
+      inputSchema: {},
+      _meta: widgetMeta(phoneWidget),
+    },
+    async () => {
+      return {
+        content: [
+          {
+            type: "text",
+            text: `TVG Automation contact information`,
+          },
+        ],
+        structuredContent: {
+          toolType: "show_phone_number",
+          timestamp: new Date().toISOString(),
+        },
+        _meta: widgetMeta(phoneWidget),
       };
     }
   );

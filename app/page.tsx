@@ -9,18 +9,30 @@ import {
   useRequestDisplayMode,
   useIsChatGptApp,
 } from "./hooks";
+import { GetQuoteWidget, ShowPhoneWidget, DefaultWidget } from "./components";
 
 export default function Home() {
   const toolOutput = useWidgetProps<{
-    name?: string;
-    result?: { structuredContent?: { name?: string } };
+    result?: { 
+      structuredContent?: { 
+        toolType?: string;
+        serviceType?: string;
+        customerName?: string;
+        urgency?: string;
+        timestamp?: string;
+      } 
+    };
   }>();
   const maxHeight = useMaxHeight() ?? undefined;
   const displayMode = useDisplayMode();
   const requestDisplayMode = useRequestDisplayMode();
   const isChatGptApp = useIsChatGptApp();
 
-  const name = toolOutput?.result?.structuredContent?.name || toolOutput?.name;
+  // Determine which tool was called
+  const toolType = toolOutput?.result?.structuredContent?.toolType;
+  const serviceType = toolOutput?.result?.structuredContent?.serviceType;
+  const customerName = toolOutput?.result?.structuredContent?.customerName;
+  const urgency = toolOutput?.result?.structuredContent?.urgency;
 
   return (
     <div
@@ -118,43 +130,14 @@ export default function Home() {
             </svg>
           </div>
 
-          {/* Contact Information Card */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-8 w-full border border-gray-200 dark:border-gray-700">
-            <div className="flex flex-col gap-6">
-              {/* Phone Number */}
-              <div className="flex items-center gap-4 justify-center">
-                <svg
-                  className="w-6 h-6 text-green-600 dark:text-green-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                </svg>
-                <a
-                  href="tel:920-366-6512"
-                  className="text-2xl font-semibold text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-500 transition-colors"
-                >
-                  Call us 920-366-6512
-                </a>
-              </div>
-
-              {/* Request Service Button */}
-              <a
-                href="http://tvgautomation.com/contact"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-lg py-4 px-8 rounded-lg transition-colors shadow-md hover:shadow-lg text-center block cursor-pointer"
-              >
-                Request a Service
-              </a>
-            </div>
-          </div>
-
-          {/* Additional Info */}
-          <div className="text-center text-gray-600 dark:text-gray-400">
-            <p className="text-lg">Professional Automation Services</p>
-            <p className="text-sm mt-2">Available 24/7 for your automation needs</p>
-          </div>
+          {/* Conditional Content Based on Tool Type */}
+          {toolType === "show_phone_number" ? (
+            <ShowPhoneWidget urgency={urgency} />
+          ) : toolType === "get_quote" ? (
+            <GetQuoteWidget serviceType={serviceType} customerName={customerName} />
+          ) : (
+            <DefaultWidget />
+          )}
         </div>
       </main>
     </div>
