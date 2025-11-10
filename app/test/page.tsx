@@ -7,7 +7,6 @@ type WidgetType = "default" | "get_quote" | "show_phone_number";
 
 export default function TestPage() {
   const [activeWidget, setActiveWidget] = useState<WidgetType>("default");
-  const [customerName, setCustomerName] = useState("John Doe");
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
@@ -57,35 +56,6 @@ export default function TestPage() {
             </div>
           </div>
 
-          {/* Parameters for Get Quote Widget */}
-          {activeWidget === "get_quote" && (
-            <div className="space-y-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-800 dark:text-gray-200">
-                Get Quote Parameters:
-              </h3>
-              <div>
-                <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">
-                  Customer Name:
-                </label>
-                <input
-                  type="text"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                  placeholder="Enter customer name"
-                />
-              </div>
-              <button
-                onClick={() => {
-                  setCustomerName("");
-                }}
-                className="text-sm text-red-600 dark:text-red-400 hover:underline"
-              >
-                Clear Parameters
-              </button>
-            </div>
-          )}
-
         </div>
 
         {/* Widget Preview */}
@@ -126,11 +96,7 @@ export default function TestPage() {
           {/* Widget Display */}
           <div className="max-w-2xl mx-auto">
             {activeWidget === "default" && <DefaultWidget />}
-            {activeWidget === "get_quote" && (
-              <GetQuoteWidget
-                customerName={customerName || undefined}
-              />
-            )}
+            {activeWidget === "get_quote" && <GetQuoteWidget />}
             {activeWidget === "show_phone_number" && (
               <ShowPhoneWidget />
             )}

@@ -1,8 +1,4 @@
-interface GetQuoteWidgetProps {
-  customerName?: string;
-}
-
-export function GetQuoteWidget({ customerName }: GetQuoteWidgetProps) {
+export function GetQuoteWidget() {
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-8 w-full border border-gray-200 dark:border-gray-700">
       <div className="flex flex-col gap-6">

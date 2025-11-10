@@ -119,22 +119,19 @@ const handler = createMcpHandler(async (server) => {
       title: quoteWidget.title,
       description:
         "Get a service quote from TVG Automation. Use this when users ask about pricing, costs, or want to request a quote.",
-      inputSchema: {
-        customerName: z.string().optional().describe("Name of the customer requesting the quote"),
-      },
+      inputSchema: {},
       _meta: widgetMeta(quoteWidget),
     },
-    async ({ customerName }) => {
+    async () => {
       return {
         content: [
           {
             type: "text",
-            text: `Quote request${customerName ? ` for ${customerName}` : ''}`,
+            text: `Quote request`,
           },
         ],
         structuredContent: {
           toolType: "get_quote",
-          customerName: customerName,
           timestamp: new Date().toISOString(),
         },
         _meta: widgetMeta(quoteWidget),
