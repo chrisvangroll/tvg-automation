@@ -39,7 +39,7 @@ const handler = createMcpHandler(async (server) => {
     invoking: "Preparing quote...",
     invoked: "Quote ready",
     html: html,
-    description: "Get a service quote from TVG Automation",
+    description: "Get a service quote from TVG Automation gas calibration and repair services",
     widgetDomain: "https://tvgautomation.com",
   };
 

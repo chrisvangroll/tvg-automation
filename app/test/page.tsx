@@ -10,7 +10,7 @@ export default function TestPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 md:p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="w-full max-w-full sm:max-w-2xl md:max-w-4xl mx-auto">
         {/* Test Controls */}
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 border border-gray-200 dark:border-gray-700">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6">
@@ -94,7 +94,7 @@ export default function TestPage() {
           </div>
 
           {/* Widget Display */}
-          <div className="max-w-2xl mx-auto">
+          <div className="w-full max-w-full sm:max-w-xl md:max-w-2xl mx-auto">
             {activeWidget === "default" && <DefaultWidget />}
             {activeWidget === "get_quote" && <GetQuoteWidget />}
             {activeWidget === "show_phone_number" && (
