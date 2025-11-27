@@ -9,11 +9,11 @@ export default function TestPage() {
   const [activeWidget, setActiveWidget] = useState<WidgetType>("default");
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 md:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Test Controls */}
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-700">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 border border-gray-200 dark:border-gray-700">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6">
             Widget Test Page
           </h1>
 
@@ -22,10 +22,10 @@ export default function TestPage() {
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
               Select Widget:
             </label>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
               <button
                 onClick={() => setActiveWidget("default")}
-                className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base ${
                   activeWidget === "default"
                     ? "bg-green-600 text-white"
                     : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
@@ -35,7 +35,7 @@ export default function TestPage() {
               </button>
               <button
                 onClick={() => setActiveWidget("get_quote")}
-                className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base ${
                   activeWidget === "get_quote"
                     ? "bg-green-600 text-white"
                     : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
@@ -45,7 +45,7 @@ export default function TestPage() {
               </button>
               <button
                 onClick={() => setActiveWidget("show_phone_number")}
-                className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base ${
                   activeWidget === "show_phone_number"
                     ? "bg-green-600 text-white"
                     : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
@@ -60,14 +60,14 @@ export default function TestPage() {
 
         {/* Widget Preview */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
             Preview:
           </h2>
           
           {/* Company Header (same as main page) */}
-          <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
             <svg
-              className="w-10 h-10 text-green-600 dark:text-green-500"
+              className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-green-600 dark:text-green-500"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -77,11 +77,11 @@ export default function TestPage() {
                 clipRule="evenodd"
               />
             </svg>
-            <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 tracking-wide">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 tracking-wide">
               TVG AUTOMATION
             </h1>
             <svg
-              className="w-10 h-10 text-green-600 dark:text-green-500"
+              className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-green-600 dark:text-green-500"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
